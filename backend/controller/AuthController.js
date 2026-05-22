@@ -9,13 +9,15 @@ export const signUp = async (req, res) => {
         const {name, email, password} = req.body;
 
         const existingUser = await User.findOne({email})
-
+        
+        //checking if the user already exist or not
         if(existingUser){
             return res.status(400).json({
                 message: "User already exists"
             })
         }
 
+        //encrypting the password and store it into the mongodb
         const hashPass = await bcrypt.hash(password, 10)
 
         const user = await User.create({
@@ -24,6 +26,7 @@ export const signUp = async (req, res) => {
             password: hashPass
         })
 
+        //sending the response from the backend to the client with status code 201 - successfully created
         res.status(201).json({
             id: user._id,
             name: user.name,
@@ -33,6 +36,8 @@ export const signUp = async (req, res) => {
 
 
     } catch (error) {
+        // if any error happens then send the response with 500 statuscode - server side error
+
         res.status(500).json({
             message: error.message
         })
@@ -53,14 +58,18 @@ export const signIn = async (req, res) => {
             })
         }
 
+        //comparing the password stored in db and the pass provided by the user
         const matchPassword = await bcrypt.compare(password, existingUser.password)
 
+
+        //if password donot match with the stored one then its an invalid password
         if(!matchPassword){
             return res.status(400).json({
                 message: "Invalid password"
             })
         }
 
+        //sending the response of the server to the client of successfully login
         res.status(200).json({
             id: existingUser._id,
             name: existingUser.name,
