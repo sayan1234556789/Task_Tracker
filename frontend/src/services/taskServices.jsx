@@ -17,19 +17,19 @@ export const getTasks = async () => {
 }
 
 export const createTask = async (taskData) => {
-    const res = await axios.post("http://localhost:5000/api/task", taskData , config())
+    const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/task`, taskData , config())
 
     return res.data
 }
 
 export const updateTask = async (id, taskData) => {
-    const res = await axios.put(`http://localhost:5000/api/task/${id}`, taskData, config())
+    const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/task/${id}`, taskData, config())
 
     return res.data
 }
 
 export const deleteTask = async (id) => {
-    const res = await axios.delete(`http://localhost:5000/api/task/${id}`, config())
+    const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/task/${id}`, config())
 
     return res.data
 }
