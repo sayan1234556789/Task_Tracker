@@ -11,7 +11,7 @@ const config = () => {
 }
 
 export const getTasks = async () => {
-    const res = await axios.get("http://localhost:5000/api/task", config())
+    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/task`, config())
 
     return res.data
 }
