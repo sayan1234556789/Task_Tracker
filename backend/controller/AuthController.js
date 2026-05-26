@@ -26,7 +26,7 @@ export const signUp = async (req, res) => {
             password: hashPass
         })
 
-        //sending the response from the backend to the client with status code 201 - successfully created
+        //sending the response from the backend to the client with status code 201 - successfully created with a jwt token
         res.status(201).json({
             id: user._id,
             name: user.name,
@@ -54,7 +54,7 @@ export const signIn = async (req, res) => {
 
         if(!existingUser){
             return res.status(400).json({
-                message: "Invalid email"
+                message: "Create new account"
             })
         }
 
